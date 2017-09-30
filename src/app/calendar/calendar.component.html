@@ -1,0 +1,10 @@
+<span class="year" [innerText]="this.year"></span>
+<span class="month" [innerText]="this.getMonthName()"></span>
+
+<span class="calendar-container">
+  <span class="day-container" *ngFor="let a of days">
+    <span class="day">{{a}}</span>
+    <span class="week" [innerText]="this.getWeekDay(a)"></span>
+    <button (click)="this.addEvent(a)">add event</button>
+  </span>
+</span>
