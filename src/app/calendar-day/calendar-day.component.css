@@ -1,0 +1,14 @@
+:host {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: 60px;
+    width: 120px;
+    border: solid 1px blue;
+    background: #eae8e9;
+}
+
+.weekend {
+    color: red;
+    font-weight: bold;
+}

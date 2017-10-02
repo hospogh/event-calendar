@@ -1,91 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {createGUID, weekDays, months, allMonthsInfo, days} from '../other/index';
+import {element} from 'protractor';
 
-const weekDays = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-const allMonthsInfo = [
-  {
-    name: 'January',
-    days: 31
-  },
-  {
-    name: 'February',
-    days: 29
-  },
-  {
-    name: 'March',
-    days: 31
-  },
-  {
-    name: 'April',
-    days: 30
-  },
-  {
-    name: 'May',
-    days: 31
-  },
-  {
-    name: 'June',
-    days: 30
-  },
-  {
-    name: 'July',
-    days: 31
-  },
-  {
-    name: 'August',
-    days: 31
-  },
-  {
-    name: 'September',
-    days: 30
-  },
-  {
-    name: 'October',
-    days: 31
-  },
-  {
-    name: 'November',
-    days: 30
-  },
-  {
-    name: 'December',
-    days: 31
-  }
-];
-
-const days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 const getDaysArr = function (mntInd) {
   const length = allMonthsInfo[mntInd].days;
   return days.slice(0, length);
 };
-
-
-
-const s4 = () => Math.random().toString(16).slice(-4);
-const createGUID = () => `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-
 
 class CalendarEvent {
   eventId: string = createGUID();
@@ -104,9 +24,9 @@ export class CalendarComponent {
   month: number;
   year: number;
   days: number[];
-  events: CalendarEvent[];
 
-
+  @ViewChild('app-element-dialog')
+  element: ElementRef;
 
   constructor() {
     this.month = new Date().getMonth();
@@ -114,7 +34,7 @@ export class CalendarComponent {
     this.days = getDaysArr(this.month);
   }
 
-  getWeekDay (day) {
+  getWeekDay(day) {
     return weekDays[(new Date(this.year, this.month, day).getDay())];
   }
 
@@ -122,20 +42,11 @@ export class CalendarComponent {
     return months[this.month];
   }
 
-  getPromise(day) {
-    const nowDate = new Date().getDate();
-    return new Promise((resolve, reject) => {
-      if(nowDate + 1 > day) {
-        alert('incorrect');
-        return;
-      }
-      const time = 1000 * 24 * 3600 * day - nowDate - 1;
-      // const time = 3000;
-      setTimeout(resolve, time);
-    });
-  };
+  closeDialog() {
+    this.element.nativeElement.style('display', 'none');
+  }
 
-  addEvent(day) {
-    this.getPromise(day).then(() => alert('event'));
+  getNumberDate(number) {
+    return new Date(this.year, this.month, number);
   }
 }

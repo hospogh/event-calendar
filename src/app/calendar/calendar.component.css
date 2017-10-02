@@ -9,21 +9,11 @@ span.month {
   margin-bottom: 10px;
 }
 
-span.calendar-container {
+.calendar-container {
   position: fixed;
   display: block;
   border: black 3px;
   width: 840px;
+  height: 300px;
 }
 
-span.day-container {
-
-  position: relative;
-  display: inline-block;
-  box-sizing: border-box;
-  height: 60px;
-  width: 120px;
-  border: solid 1px blue;
-  background: #eae8e9;
-}
-.calendar-container .day-container .day {}
