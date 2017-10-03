@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input} from '@angular/core';
-import {createGUID, weekDays, months, allMonthsInfo, days} from '../other/index';
+import {storage, createGUID, weekDays, months, allMonthsInfo, days} from '../other/index';
+
 
 @Component({
   selector: 'app-calendar-day',
@@ -11,42 +12,56 @@ export class CalendarDayComponent {
   @Input()
   date: Date;
   @Input()
-  week: number;
+  week: string;
   day: number;
 
   constructor() {
     setInterval(() => {
       this.day = this.date.getDate();
     }, 0);
-
-    if (this.week === 0 || this.week === 6) {
-      const el = document.querySelector('.week');
-      el.querySelector('weekend'); // add class or edit style
-    }
   }
 
 
   static getDifference(firstDate, secondDate) {
-    return 11; // parseInt((secondDate - firstDate) / (1000 * 60 * 60 * 24));
+    return +((secondDate - firstDate) / (1000 * 60 * 60 * 24));
   }
 
   getPromise(date) {
     const nowDate = new Date();
     const dayDifference = CalendarDayComponent.getDifference(nowDate, date);
-    return new Promise((resolve, reject) => {
+
+    return new Promise((resolve) => {
       if (dayDifference < 1) {
         alert('incorrect');
         return;
       }
-      const time = 1000 * 24 * 3600 * (dayDifference - 1);
-      setTimeout(resolve, time);
+
+      const title = prompt('Title', 'noTitle');
+      if (title) {
+        storage.push({
+          eventId: createGUID(),
+          title,
+          date,
+          settingDate: nowDate
+        });
+
+        const time = 1000 * 24 * 3600 * (dayDifference - 1);
+        setTimeout(resolve, time);
+      }
     });
   }
 
   addEvent(date) {
     this.getPromise(this.date).then(() => {
-      // this.events.push(); // todo push event from event-dialog
-      alert('event');
+      alert(`event in ${date}`);
     });
+  }
+
+  isFeature() {
+    return CalendarDayComponent.getDifference(new Date(), this.date) >= 1;
+  }
+
+  style() {
+    return {'color': this.week === 'Sunday' || this.week === 'Saturday' ? 'red' : 'black'};
   }
 }

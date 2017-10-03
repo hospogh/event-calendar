@@ -12,3 +12,14 @@
     color: red;
     font-weight: bold;
 }
+
+button {
+    display: block;
+    margin: 3px auto;
+    position: relative;
+    height: 24px;
+    width: 90px;
+}
+.weekend {
+    font: red;
+}

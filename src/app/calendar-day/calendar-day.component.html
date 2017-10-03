@@ -1,5 +1,15 @@
-<span class="day">{{day}}</span>
-<span class="week">{{week}}</span>
-<button
-  (click)="this.addEvent(day)">add event
-</button>
+<span
+  class="day"
+  [innerText]="day"></span>
+  <span
+    class="week"
+    [ngStyle]="style()"
+    [innerText]="week"></span>
+  <button
+    *ngIf="isFeature(); else past"
+    (click)="this.addEvent(day)">
+    add event
+  </button>
+  <ng-template #past>
+    <button [disabled]="true">Deactivated</button>
+  </ng-template>

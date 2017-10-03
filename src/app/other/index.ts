@@ -77,3 +77,5 @@ export const days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 
 
 const s4 = () => Math.random().toString(16).slice(-4);
 export const createGUID = () => `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+
+export const storage = [];
